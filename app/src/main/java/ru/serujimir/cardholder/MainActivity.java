@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -102,5 +103,11 @@ public class MainActivity extends AppCompatActivity {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         }
+    }
+
+    public void Back (View v) {
+        Intent Back = new Intent(MainActivity.this, CardListActivity.class);
+        startActivity(Back);
+        finishAffinity();
     }
 }
