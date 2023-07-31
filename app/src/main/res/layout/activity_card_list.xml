@@ -37,13 +37,6 @@
             android:onClick="AddCard"
             android:text="Add" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="Delete"
-            android:text="Delete All" />
     </TableRow>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

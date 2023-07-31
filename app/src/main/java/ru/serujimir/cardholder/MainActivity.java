@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         edCvv = findViewById(R.id.edCardCVVcode);
         edExpiration = findViewById(R.id.edCardExpirationDate);
 
-        btnPOST = findViewById(R.id.btnPOST);
-        btnGET = findViewById(R.id.btnGET);
+        btnPOST = findViewById(R.id.btnAdd);
+        btnGET = findViewById(R.id.btnAdd);
         context = this;
         dBhelper = new DBhelper(this);
 
