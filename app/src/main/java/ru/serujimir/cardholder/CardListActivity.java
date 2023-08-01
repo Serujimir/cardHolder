@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +23,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class CardListActivity extends AppCompatActivity {
+public class CardListActivity extends AppCompatActivity implements DataChanged{
 
     ArrayList<Card> cards = new ArrayList<Card>();
     RecyclerView rv;
@@ -30,6 +31,12 @@ public class CardListActivity extends AppCompatActivity {
     DBhelper dBhelper;
 
     CardAdapter cardAdapter;
+
+    SQLiteDatabase sqLiteDatabase;
+    DataChanged dataChanged;
+    ProgressDialog progressDialog;
+    Context context0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +47,14 @@ public class CardListActivity extends AppCompatActivity {
 
 
     public void init() {
+        context0 = getApplicationContext();
         dBhelper = new DBhelper(this);
         setInitionalData();
         rv = findViewById(R.id.cardRV);
         cardAdapter = new CardAdapter(this, cards);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(cardAdapter);
+        sqLiteDatabase = dBhelper.getReadableDatabase();
     }
     public void setInitionalData() {
 
@@ -75,6 +84,65 @@ public class CardListActivity extends AppCompatActivity {
         cursor.close();
         dBhelper.close();
     }
+
+
+    public void AddCard(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this );
+        ConstraintLayout view = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
+        builder.setView(view);
+
+        EditText edCardNumber = (EditText) view.findViewById(R.id.edCardNumber);
+        EditText edCardCVVcode = (EditText) view.findViewById(R.id.edCardCVVcode);
+        EditText edCardExpirationDate = (EditText) view.findViewById(R.id.edCardExpirationDate);
+
+        Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
+        AlertDialog alertDialog = builder.create();
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(CardListActivity.this);
+                progressDialog.setTitle("In progress...");
+                progressDialog.show();
+                ContentValues contentValues = new ContentValues();
+                SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
+
+                String number = edCardNumber.getText().toString();
+                String cvv = edCardCVVcode.getText().toString();
+                String expiration = edCardExpirationDate.getText().toString();
+
+                contentValues.put("number", number);
+                contentValues.put("cvv", cvv);
+                contentValues.put("expiration", expiration);
+                sqLiteDatabase.insert("DBcard", null, contentValues);
+                alertDialog.dismiss();
+                progressDialog.dismiss();
+                cardAdapter.Update();
+            }
+        });
+        alertDialog.show();
+    }
+
+    @Override
+    public void Deleted() {
+
+    }
+
+    @Override
+    public void Changed() {
+
+    }
+
+    @Override
+    public void Added() {
+
+    }
+
+    public void Restart() {
+        Intent intent = new Intent(context0 ,CardListActivity.class);
+        getApplicationContext().startActivity(intent);
+    }
+
     static class DBhelper extends SQLiteOpenHelper {
 
         public DBhelper(@Nullable Context context) {
@@ -95,37 +163,5 @@ public class CardListActivity extends AppCompatActivity {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         }
-    }
-
-    public void AddCard(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this );
-        ConstraintLayout view = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
-        builder.setView(view);
-
-        EditText edCardNumber = (EditText) view.findViewById(R.id.edCardNumber);
-        EditText edCardCVVcode = (EditText) view.findViewById(R.id.edCardCVVcode);
-        EditText edCardExpirationDate = (EditText) view.findViewById(R.id.edCardExpirationDate);
-
-        Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
-        AlertDialog alertDialog = builder.create();
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ContentValues contentValues = new ContentValues();
-                SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
-
-                String number = edCardNumber.getText().toString();
-                String cvv = edCardCVVcode.getText().toString();
-                String expiration = edCardExpirationDate.getText().toString();
-
-                contentValues.put("number", number);
-                contentValues.put("cvv", cvv);
-                contentValues.put("expiration", expiration);
-                sqLiteDatabase.insert("DBcard", null, contentValues);
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog.show();
     }
 }
