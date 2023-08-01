@@ -98,6 +98,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
                     @Override
                     public void onClick(View v) {
+                        alertDialog.dismiss();
                         dBhelper = new CardListActivity.DBhelper(view.getContext());
                         SQLiteDatabase sqLiteDatabase = dBhelper.getReadableDatabase();
 
@@ -121,7 +122,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                         btnEdit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                CardListActivity cardListActivity = new CardListActivity();
 
                                 ContentValues contentValues = new ContentValues();
                                 SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
@@ -134,15 +134,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                                 contentValues.put("cvv", cvv);
                                 contentValues.put("expiration", expiration);
                                 sqLiteDatabase.update("DBcard", contentValues, "id = " + card.getId(), null);
-                                alertDialog.dismiss();
 
                                 Update();
+                                edCardNumber.setText(card.getNumber());
+                                edCardCVVcode.setText(card.getCvv());
+                                edCardExpirationDate.setText(card.getExpiration());
+
+                                alertDialog.dismiss();
                             }
                         });
                         alertDialog.show();
                     }
                 });
-
                 alertDialog.show();
             }
         });
@@ -207,7 +210,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
         cursor.close();
         dBhelper.close();
         notifyDataSetChanged();
-
     }
 
 }
