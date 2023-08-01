@@ -207,6 +207,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
         cursor.close();
         dBhelper.close();
         notifyDataSetChanged();
+
     }
 
 }
