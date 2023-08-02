@@ -55,7 +55,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
     public void onBindViewHolder(@NonNull CardAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Card card = cards.get(position);
         holder.number.setText(card.getNumber());
-        holder.cvv.setText("***");
+        if(card.getCvv().equals("") || card.getCvv().equals(null)) {
+            holder.cvv.setText("YOU delete all cards...");
+        }
+        else{
+            holder.cvv.setText("***");
+        }
         holder.expiration.setText(card.getExpiration());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,9 +94,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                         sqLiteDatabase.delete("DBcard", "id = " + card.getId(), null);
                         dBhelper = new CardListActivity.DBhelper(inflater.getContext());
                         sqLiteDatabase.close();
-                        Update();
                         progressDialog.dismiss();
                         alertDialog.dismiss();
+                        Update();
                     }
                 });
                 btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +211,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
             }while (cursor.moveToNext());
 
         }else
-            return;
+
         cursor.close();
         dBhelper.close();
         notifyDataSetChanged();
