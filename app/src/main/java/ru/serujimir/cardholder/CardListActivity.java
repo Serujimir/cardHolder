@@ -10,20 +10,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CardListActivity extends AppCompatActivity implements DataChanged{
+public class CardListActivity extends AppCompatActivity {
 
     ArrayList<Card> cards = new ArrayList<Card>();
     RecyclerView rv;
@@ -33,7 +36,6 @@ public class CardListActivity extends AppCompatActivity implements DataChanged{
     CardAdapter cardAdapter;
 
     SQLiteDatabase sqLiteDatabase;
-    DataChanged dataChanged;
     ProgressDialog progressDialog;
     Context context0;
 
@@ -88,59 +90,196 @@ public class CardListActivity extends AppCompatActivity implements DataChanged{
 
     public void AddCard(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this );
-        ConstraintLayout view = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_main, null);
+        ConstraintLayout view = (ConstraintLayout) getLayoutInflater().inflate(R.layout.add_edit_card, null);
         builder.setView(view);
 
-        EditText edCardNumber = (EditText) view.findViewById(R.id.edCardNumber);
+        EditText edCardNumber1 = (EditText) view.findViewById(R.id.edCardNumber1);
+        EditText edCardNumber2 = (EditText) view.findViewById(R.id.edCardNumber2);
+        EditText edCardNumber3 = (EditText) view.findViewById(R.id.edCardNumber3);
+        EditText edCardNumber4 = (EditText) view.findViewById(R.id.edCardNumber4);
+
         EditText edCardCVVcode = (EditText) view.findViewById(R.id.edCardCVVcode);
-        EditText edCardExpirationDate = (EditText) view.findViewById(R.id.edCardExpirationDate);
+
+        EditText edCardExpirationDate1 = (EditText) view.findViewById(R.id.edCardExpiration1);
+        EditText edCardExpirationDate2 = (EditText) view.findViewById(R.id.edCardExpiration2);
+
+        edCardNumber1.requestFocus();
+        edCardNumber1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 4) {
+                    edCardNumber2.requestFocus();
+                }
+            }
+        });
+
+        edCardNumber2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 4) {
+                    edCardNumber3.requestFocus();
+                }
+            }
+        });
+
+        edCardNumber3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 4) {
+                    edCardNumber4.requestFocus();
+                }
+            }
+        });
+
+        edCardNumber4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 4) {
+                    edCardCVVcode.requestFocus();
+                }
+            }
+        });
+
+        edCardCVVcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 3) {
+                    edCardExpirationDate1.requestFocus();
+                }
+            }
+        });
+
+        edCardExpirationDate1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 2) {
+                    edCardExpirationDate2.requestFocus();
+                }
+            }
+        });
+
+        edCardExpirationDate2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.length() == 2) {
+
+                }
+            }
+        });
+
+
 
         Button btnAdd = (Button) view.findViewById(R.id.btnAdd);
         AlertDialog alertDialog = builder.create();
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                progressDialog = new ProgressDialog(CardListActivity.this);
-                progressDialog.setTitle("In progress...");
-                progressDialog.show();
-                ContentValues contentValues = new ContentValues();
-                SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
+                public void onClick(View v) {
+                    if(edCardNumber1.length() == 4 && edCardNumber2.length() == 4 && edCardNumber3.length() == 4 && edCardNumber4.length() == 4 && edCardCVVcode.length() == 3 && edCardExpirationDate1.length() == 2 && edCardExpirationDate2.length() == 2) {
+                        progressDialog = new ProgressDialog(CardListActivity.this);
+                        progressDialog.setTitle("In progress...");
+                        progressDialog.show();
+                        ContentValues contentValues = new ContentValues();
+                        SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
 
-                String number = edCardNumber.getText().toString();
-                String cvv = edCardCVVcode.getText().toString();
-                String expiration = edCardExpirationDate.getText().toString();
+                        String number = edCardNumber1.getText().toString() + " " + edCardNumber2.getText().toString() + " " + edCardNumber3.getText().toString() + " " + edCardNumber4.getText().toString();
+                        String cvv = edCardCVVcode.getText().toString();
+                        String expiration = edCardExpirationDate1.getText().toString() + "/" + edCardExpirationDate2.getText().toString();
 
-                contentValues.put("number", number);
-                contentValues.put("cvv", cvv);
-                contentValues.put("expiration", expiration);
-                sqLiteDatabase.insert("DBcard", null, contentValues);
-                alertDialog.dismiss();
-                progressDialog.dismiss();
-                cardAdapter.Update();
-            }
-        });
+                        contentValues.put("number", number);
+                        contentValues.put("cvv", cvv);
+                        contentValues.put("expiration", expiration);
+                        sqLiteDatabase.insert("DBcard", null, contentValues);
+                        alertDialog.dismiss();
+                        progressDialog.dismiss();
+                        cardAdapter.Update();
+                    }
+                    else {
+                        Toast.makeText(CardListActivity.this, "Fill all fields!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        
         alertDialog.show();
     }
-
-    @Override
-    public void Deleted() {
-
+    public void hideSoftKeyboard(View view){
+        InputMethodManager imm =(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    @Override
-    public void Changed() {
-
-    }
-
-    @Override
-    public void Added() {
-
-    }
-
-    public void Restart() {
-        Intent intent = new Intent(context0 ,CardListActivity.class);
-        getApplicationContext().startActivity(intent);
+    public void showSoftKeyboard(View view){
+        if(view.requestFocus()){
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(view,InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     static class DBhelper extends SQLiteOpenHelper {

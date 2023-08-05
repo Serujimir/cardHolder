@@ -1,42 +1,37 @@
 package ru.serujimir.cardholder;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.zip.Inflater;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> implements DataChanged {
+import java.util.List;
+
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder>  {
 
     private final LayoutInflater inflater;
     public final List<Card> cards;
     CardListActivity.DBhelper dBhelper;
 
     ProgressDialog progressDialog;
-    DataChanged dataChanged;
 
 
     CardAdapter(Context context, List<Card> cards) {
@@ -86,17 +81,35 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        progressDialog = new ProgressDialog(inflater.getContext());
-                        progressDialog.setTitle("In progress...");
-                        progressDialog.show();
-                        dBhelper = new CardListActivity.DBhelper(view.getContext());
-                        SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
-                        sqLiteDatabase.delete("DBcard", "id = " + card.getId(), null);
-                        dBhelper = new CardListActivity.DBhelper(inflater.getContext());
-                        sqLiteDatabase.close();
-                        progressDialog.dismiss();
-                        alertDialog.dismiss();
-                        Update();
+
+                        AlertDialog.Builder builder1 = new MaterialAlertDialogBuilder(inflater.getContext());
+                        builder1.setTitle("Do you wanna delete card?");
+
+
+                        builder1.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
+                                progressDialog = new ProgressDialog(inflater.getContext());
+                                progressDialog.setTitle("In progress...");
+                                progressDialog.show();
+                                dBhelper = new CardListActivity.DBhelper(view.getContext());
+                                SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
+                                sqLiteDatabase.delete("DBcard", "id = " + card.getId(), null);
+                                dBhelper = new CardListActivity.DBhelper(inflater.getContext());
+                                sqLiteDatabase.close();
+                                progressDialog.dismiss();
+                                alertDialog.dismiss();
+                                Update();
+                            }
+                        });
+                        AlertDialog alertDialog1 = builder1.create();
+                        alertDialog1.show();
                     }
                 });
                 btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -108,16 +121,28 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                         SQLiteDatabase sqLiteDatabase = dBhelper.getReadableDatabase();
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(inflater.getContext() );
-                        ConstraintLayout view = (ConstraintLayout) inflater.inflate(R.layout.activity_main, null);
+                        ConstraintLayout view = (ConstraintLayout) inflater.inflate(R.layout.add_edit_card, null);
                         builder.setView(view);
 
-                        EditText edCardNumber = (EditText) view.findViewById(R.id.edCardNumber);
-                        EditText edCardCVVcode = (EditText) view.findViewById(R.id.edCardCVVcode);
-                        EditText edCardExpirationDate = (EditText) view.findViewById(R.id.edCardExpirationDate);
+                        EditText edCardNumber1 = (EditText) view.findViewById(R.id.edCardNumber1);
+                        EditText edCardNumber2 = (EditText) view.findViewById(R.id.edCardNumber2);
+                        EditText edCardNumber3 = (EditText) view.findViewById(R.id.edCardNumber3);
+                        EditText edCardNumber4 = (EditText) view.findViewById(R.id.edCardNumber4);
 
-                        edCardNumber.setText(card.getNumber());
+                        EditText edCardCVVcode = (EditText) view.findViewById(R.id.edCardCVVcode);
+
+                        EditText edCardExpirationDate1 = (EditText) view.findViewById(R.id.edCardExpiration1);
+                        EditText edCardExpirationDate2 = (EditText) view.findViewById(R.id.edCardExpiration2);
+
+                        edCardNumber1.setText(card.getNumber().substring(0,4));
+                        edCardNumber2.setText(card.getNumber().substring(5,10));
+                        edCardNumber3.setText(card.getNumber().substring(10,14));
+                        edCardNumber4.setText(card.getNumber().substring(15,19));
+
                         edCardCVVcode.setText(card.getCvv());
-                        edCardExpirationDate.setText(card.getExpiration());
+
+                        edCardExpirationDate1.setText(card.getExpiration().substring(0,2));
+                        edCardExpirationDate2.setText(card.getExpiration().substring(3,5));
 
 
                         Button btnEdit = (Button) view.findViewById(R.id.btnAdd);
@@ -127,25 +152,56 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                         btnEdit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if(edCardNumber1.length() == 4 && edCardNumber2.length() == 4 && edCardNumber3.length() == 4 && edCardNumber4.length() == 4 && edCardCVVcode.length() == 3 && edCardExpirationDate1.length() == 2 && edCardExpirationDate2.length() == 2)
+                                {
+                                    AlertDialog.Builder builder2 = new MaterialAlertDialogBuilder(inflater.getContext());
+                                    builder2.setTitle("Save Changes?");
 
-                                ContentValues contentValues = new ContentValues();
-                                SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
+                                    builder2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
-                                String number = edCardNumber.getText().toString();
-                                String cvv = edCardCVVcode.getText().toString();
-                                String expiration = edCardExpirationDate.getText().toString();
+                                        }
+                                    });
 
-                                contentValues.put("number", number);
-                                contentValues.put("cvv", cvv);
-                                contentValues.put("expiration", expiration);
-                                sqLiteDatabase.update("DBcard", contentValues, "id = " + card.getId(), null);
+                                    builder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ContentValues contentValues = new ContentValues();
+                                            SQLiteDatabase sqLiteDatabase = dBhelper.getWritableDatabase();
 
-                                Update();
-                                edCardNumber.setText(card.getNumber());
-                                edCardCVVcode.setText(card.getCvv());
-                                edCardExpirationDate.setText(card.getExpiration());
+                                            String number = edCardNumber1.getText().toString() + " " + edCardNumber2.getText().toString() + " " + edCardNumber3.getText().toString() + " " + edCardNumber4.getText().toString();
+                                            String cvv = edCardCVVcode.getText().toString();
+                                            String expiration = edCardExpirationDate1.getText().toString() + "/" + edCardExpirationDate2.getText().toString();
 
-                                alertDialog.dismiss();
+                                            contentValues.put("number", number);
+                                            contentValues.put("cvv", cvv);
+                                            contentValues.put("expiration", expiration);
+                                            sqLiteDatabase.update("DBcard", contentValues, "id = " + card.getId(), null);
+
+                                            Update();
+                                            edCardNumber1.setText(card.getNumber().substring(0,4));
+                                            edCardNumber2.setText(card.getNumber().substring(5,10));
+                                            edCardNumber3.setText(card.getNumber().substring(10,14));
+                                            edCardNumber4.setText(card.getNumber().substring(15,19));
+
+                                            edCardCVVcode.setText(card.getCvv());
+
+                                            edCardExpirationDate1.setText(card.getExpiration().substring(0,2));
+                                            edCardExpirationDate2.setText(card.getExpiration().substring(3,5));
+
+
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+
+                                    AlertDialog alertDialog1 = builder2.create();
+                                    alertDialog1.show();
+                                }
+                                else {
+                                    Toast.makeText(inflater.getContext(), "Fill all fields!", Toast.LENGTH_SHORT).show();
+                                }
+                                
                             }
                         });
                         alertDialog.show();
@@ -161,20 +217,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
         return cards.size();
     }
 
-    @Override
-    public void Deleted() {
-
-    }
-
-    @Override
-    public void Changed() {
-
-    }
-
-    @Override
-    public void Added() {
-
-    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView number, cvv, expiration;
