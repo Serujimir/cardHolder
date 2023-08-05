@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/design_default_color_primary"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".CardListActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,8 +27,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="Number"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -40,36 +44,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="4"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/edCardNumber2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="4"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/edCardNumber3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="4"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/edCardNumber4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="4"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="4" />
+                android:maxLength="4"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
         </TableRow>
 
@@ -82,8 +102,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="CVV/CVV2"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -96,9 +119,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="3"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="3" />
+                android:maxLength="3"
+                android:textAlignment="center"
+                android:textColor="#000000" />
 
         </TableRow>
 
@@ -111,8 +138,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="Expiration Date"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textSize="24sp" />
         </TableRow>
 
@@ -125,17 +155,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="2"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="2" />
+                android:maxLength="2"
+                android:textColor="#000000"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
                 android:text="/"
                 android:textAlignment="center"
+                android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
             <EditText
@@ -143,9 +179,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_background"
                 android:ems="2"
+                android:fontFamily="sans-serif-black"
                 android:inputType="numberSigned"
-                android:maxLength="2" />
+                android:maxLength="2"
+                android:textAlignment="center"
+                android:textColor="#000000" />
         </TableRow>
 
         <TableRow
@@ -157,6 +197,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="Add" />
         </TableRow>
     </LinearLayout>

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/material_dynamic_neutral_variant10"
     android:padding="8dp"
-    tools:context=".CardListActivity" >
+    tools:context=".CardListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardRV"
@@ -27,13 +28,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" >
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:drawable/editbox_dropdown_dark_frame"
+            android:fontFamily="sans-serif-black"
             android:onClick="AddCard"
             android:text="Add" />
 

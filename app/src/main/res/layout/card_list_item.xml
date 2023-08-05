@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:background="@android:drawable/editbox_dropdown_light_frame"
+    android:background="@color/design_default_color_primary"
     android:padding="8dp">
 
     <TableLayout
@@ -24,14 +24,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Number:" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="Number:"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="2220 8888 9449 5959" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="2220 8888 9449 5959"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -43,14 +49,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="CVV/CVV2 Code:" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="CVV/CVV2 Code:"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvCvv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="289" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="289"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -62,14 +74,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Expiration Date" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="Expiration Date"
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/tvExpiration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="09/27" />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="09/27"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
     </TableLayout>

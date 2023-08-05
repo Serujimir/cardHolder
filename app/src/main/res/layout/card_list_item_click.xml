@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/design_default_color_primary"
     android:padding="8dp">
 
     <TableLayout
@@ -26,15 +27,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Number: " />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="Number: "
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/clickNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="0000 1111 2222 3333"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF" />
 
         </TableRow>
 
@@ -49,15 +56,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="CVV/CVV2 Code: " />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="CVV/CVV2 Code: "
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/clickCvv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="532"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -71,15 +84,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Expiration Date: " />
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
+                android:text="Expiration Date: "
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/clickExpiration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:text="08/28"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textColor="#FFFFFF" />
         </TableRow>
 
         <TableRow
@@ -93,6 +112,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:onClick="Delete"
                 android:text="Delete" />
 
@@ -101,6 +122,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:drawable/editbox_dropdown_dark_frame"
+                android:fontFamily="sans-serif-black"
                 android:onClick="Edit"
                 android:text="Edit" />
         </TableRow>
